@@ -106,11 +106,11 @@ public class ListaEncadeada {
 		return cont;
 	}
 	
-	public boolean contem(int elemento) {
+	public boolean contem(int valor) {
 		boolean cont = false;
 		No auxiliar = cabeca;
 		while (auxiliar != null) {
-			if(auxiliar.dado == elemento) {
+			if(auxiliar.dado == valor) {
 				cont = true;
 			}
 			auxiliar = auxiliar.proximo;
@@ -144,16 +144,16 @@ public class ListaEncadeada {
 		return pegaNo(posicao).dado;
 	}
 	
-	public void adicionaPosicao(int posicao, No no) throws Exception {
+	public void adicionaPosicao(int posicao, int valor) throws Exception {
 		if(posicao == 0) {
-			insertAtFront(no.dado);
+			insertAtFront(valor);
 		} else {
-			if(posicao == size()) {
-				insertAtBack(no.dado);
+			if(posicao == size() - 1) {
+				insertAtBack(valor);
 			} else {
 				No anterior = pegaNo(posicao - 1);
 				No novoNo = new No();
-				novoNo.dado = no.dado;
+				novoNo.dado = valor;
 				novoNo.proximo = anterior.proximo;
 				anterior.proximo = novoNo;
 			}
@@ -161,9 +161,17 @@ public class ListaEncadeada {
 	}
 	
 	public void remove(int posicao) throws Exception {
-		No removido = pegaNo(posicao);
-		No anterior = pegaNo(posicao - 1);
-		anterior.proximo = removido.proximo;
+		if(posicao == 0) {
+			removeAtFront();
+		} else {
+			if(posicao == size() - 1) {
+				removeAtBack();
+			} else {
+				No removido = pegaNo(posicao);
+				No anterior = pegaNo(posicao - 1);
+				anterior.proximo = removido.proximo;
+			}
+		}
 	}
 	
 	@Override
