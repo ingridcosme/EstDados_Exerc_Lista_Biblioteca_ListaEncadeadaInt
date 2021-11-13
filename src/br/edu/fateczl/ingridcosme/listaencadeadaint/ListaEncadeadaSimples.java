@@ -1,10 +1,10 @@
 package br.edu.fateczl.ingridcosme.listaencadeadaint;
 
-public class ListaEncadeada {
+public class ListaEncadeadaSimples {
 	No cabeca;
 	No cauda;
 	
-	public ListaEncadeada() {
+	public ListaEncadeadaSimples() {
 		cabeca = null;
 		cauda = null;
 	}
@@ -85,8 +85,10 @@ public class ListaEncadeada {
 		}
 		No auxiliar = cabeca;
 		System.out.println("=============================================");
+		System.out.println("");
+		System.out.print("NULL<==");
 		while(auxiliar != null) {
-			System.out.println("[ " + auxiliar.dado + " ] ==> ");
+			System.out.print("[][ " + auxiliar.dado + " ][]<==>");
 			auxiliar = auxiliar.proximo;
 		}
 		System.out.println("NULL");
@@ -106,19 +108,19 @@ public class ListaEncadeada {
 		return cont;
 	}
 	
-	public boolean contem(int valor) {
-		boolean cont = false;
+	public boolean contains(int valor) {
+		boolean achou = false;
 		No auxiliar = cabeca;
 		while (auxiliar != null) {
 			if(auxiliar.dado == valor) {
-				cont = true;
+				achou = true;
 			}
 			auxiliar = auxiliar.proximo;
 		}
-		return cont;
+		return achou;
 	}
 	
-	public boolean posicaoOcupada(int posicao) {
+	public boolean isBusy(int posicao) {
 		boolean ocupado = false;
 		if(posicao >= 0 && posicao < size()) {
 			ocupado = true;
@@ -126,32 +128,32 @@ public class ListaEncadeada {
 		return ocupado;
 	}
 	
-	public No pegaNo(int posicao) throws Exception {
-		if(!posicaoOcupada(posicao)) {
+	public No getNo(int posicao) throws Exception {
+		if(!isBusy(posicao)) {
 			throw new Exception("Posição não existe");
 		}
 		if(isEmpty()) {
 			throw new Exception("Lista vazia");
 		}
 		No auxiliar = cabeca;
-		for(int i = 0; i < posicao-1; i++) {
+		for(int i = 0; i <= posicao-1; i++) {
 			auxiliar = auxiliar.proximo;
 		}
 		return auxiliar;
 	}
 	
-	public int pegaElemento(int posicao) throws Exception {
-		return pegaNo(posicao).dado;
+	public int getValue(int posicao) throws Exception {
+		return getNo(posicao).dado;
 	}
 	
-	public void adicionaPosicao(int posicao, int valor) throws Exception {
+	public void insertPosition(int posicao, int valor) throws Exception {
 		if(posicao == 0) {
 			insertAtFront(valor);
 		} else {
 			if(posicao == size() - 1) {
 				insertAtBack(valor);
 			} else {
-				No anterior = pegaNo(posicao - 1);
+				No anterior = getNo(posicao - 1);
 				No novoNo = new No();
 				novoNo.dado = valor;
 				novoNo.proximo = anterior.proximo;
@@ -160,15 +162,15 @@ public class ListaEncadeada {
 		}
 	}
 	
-	public void remove(int posicao) throws Exception {
+	public void removePosition(int posicao) throws Exception {
 		if(posicao == 0) {
 			removeAtFront();
 		} else {
 			if(posicao == size() - 1) {
 				removeAtBack();
 			} else {
-				No removido = pegaNo(posicao);
-				No anterior = pegaNo(posicao - 1);
+				No removido = getNo(posicao);
+				No anterior = getNo(posicao - 1);
 				anterior.proximo = removido.proximo;
 			}
 		}
